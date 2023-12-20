@@ -7,7 +7,7 @@ const instance = axios.create({
 });
 
 export const charactersApi = {
-  getCharacters() {
-    return instance.get<CharactersResponseType>('/people/?page=9');
+  getCharacters(pageNumber: number) {
+    return instance.get<CharactersResponseType>(`/people/?page=${pageNumber}`);
   },
 };

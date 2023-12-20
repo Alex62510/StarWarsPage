@@ -4,16 +4,31 @@ import { charactersApi } from '../api/api';
 
 import { CharacterType } from './types';
 
-type StoreType = {
+export type StoreType = {
   characters: CharacterType[];
-  getCharacters: () => Promise<void>;
+  getCharacters: (pageNumber: number) => Promise<void>;
+  numberOfCharacters: number;
+  isLoading: boolean;
+  error: boolean;
 };
 
 export const useStore = create<StoreType>(set => ({
   characters: [],
-  getCharacters: async () => {
-    const res = await charactersApi.getCharacters();
+  numberOfCharacters: 0,
+  isLoading: false,
+  error: false,
+  getCharacters: async (pageNumber: number) => {
+    set({ isLoading: true });
+    try {
+      const res = await charactersApi.getCharacters(pageNumber);
 
-    set({ characters: res.data.results });
+      set({ characters: res.data.results });
+      set({ numberOfCharacters: +res.data.count });
+      set({ error: false });
+    } catch {
+      set({ error: true });
+    } finally {
+      set({ isLoading: false });
+    }
   },
 }));

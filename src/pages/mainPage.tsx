@@ -1,19 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { getId } from '../helpers/getCharacteresId';
+import { useNavigate } from 'react-router-dom';
+
+import Characters from '../components/characters';
+import { BasicPagination } from '../components/pagination';
+import { Paths } from '../constants/paths';
+import Preloader from '../helpers/Preloader';
 import { useStore } from '../store/store';
 
 const MainPage = (): React.JSX.Element => {
-  const { getCharacters, characters } = useStore();
+  const [page, setPage] = useState(1);
+  const { error, isLoading, getCharacters, numberOfCharacters } = useStore();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    getCharacters(page);
+  }, [page]);
+
+  if (error) {
+    navigate(Paths.error);
+  }
 
   return (
     <div>
-      {characters.map(person => (
-        <div key={getId(person.url)}>{person.name}</div>
-      ))}
-      <button type="button" onClick={() => getCharacters()}>
-        Add
-      </button>
+      {isLoading ? <Preloader /> : <Characters />}
+      <BasicPagination
+        setPage={setPage}
+        countItems={numberOfCharacters}
+        currentPage={page}
+      />
     </div>
   );
 };
