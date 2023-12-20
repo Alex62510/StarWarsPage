@@ -17,13 +17,16 @@ const MainPage = (): React.JSX.Element => {
     getCharacters(page);
   }, [page]);
 
-  if (error) {
-    navigate(Paths.error);
-  }
+  useEffect(() => {
+    if (error) {
+      navigate(Paths.error);
+    }
+  }, [error]);
 
   return (
     <div>
-      {isLoading ? <Preloader /> : <Characters />}
+      {isLoading && <Preloader />}
+      <Characters />
       <BasicPagination
         setPage={setPage}
         countItems={numberOfCharacters}

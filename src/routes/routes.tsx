@@ -2,6 +2,8 @@ import { lazy, type ReactElement } from 'react';
 import React from 'react';
 
 import { Paths } from '../constants/paths';
+import CharacterPage from '../pages/characterPage';
+import ErrorPage from '../pages/errorPage';
 
 interface RoutesType {
   path: string;
@@ -16,15 +18,15 @@ export const PagesRoutes: RoutesType[] = [
     element: <MainPage />,
   },
   {
-    path: Paths.character,
-    element: <div>characterPage</div>,
+    path: `${Paths.character}/:id`,
+    element: <CharacterPage />,
   },
   {
     path: Paths.notFound,
-    element: <div>page 404</div>,
+    element: <ErrorPage />,
   },
   {
     path: Paths.error,
-    element: <div>server error</div>,
+    element: <ErrorPage />,
   },
 ];
