@@ -13,8 +13,7 @@ export const useStore = create<StoreType>(set => ({
   characters: [],
   getCharacters: async () => {
     const res = await charactersApi.getCharacters();
-    const { results } = res.data;
 
-    set({ characters: results });
+    set({ characters: res.data.results });
   },
 }));

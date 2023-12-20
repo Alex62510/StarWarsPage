@@ -1,16 +1,16 @@
 import React from 'react';
 
+import { getId } from '../helpers/getCharacteresId';
 import { useStore } from '../store/store';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const MainPage = () => {
+const MainPage = (): React.JSX.Element => {
   const { getCharacters, characters } = useStore();
-
-  console.log(characters);
 
   return (
     <div>
-      {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+      {characters.map(person => (
+        <div key={getId(person.url)}>{person.name}</div>
+      ))}
       <button type="button" onClick={() => getCharacters()}>
         Add
       </button>
