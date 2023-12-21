@@ -6,13 +6,21 @@ import Characters from '../components/characters';
 import { BasicPagination } from '../components/pagination';
 import { SearchInput } from '../components/searchInput';
 import { Paths } from '../constants/paths';
+import { getId } from '../helpers/getCharacteresId';
 import Preloader from '../helpers/Preloader';
 import { useStore } from '../store/store';
 import { CharacterType } from '../store/types';
 
 const MainPage = React.memo(() => {
   const [page, setPage] = useState(1);
-  const { error, getCharacters, characters, isLoading, numberOfCharacters } = useStore();
+  const {
+    characterInfo,
+    error,
+    getCharacters,
+    characters,
+    isLoading,
+    numberOfCharacters,
+  } = useStore();
   const navigate = useNavigate();
   const [filteredCharacters, setFilteredCharacters] = useState<CharacterType[] | null>(
     null,
@@ -30,10 +38,20 @@ const MainPage = React.memo(() => {
     }
   }, [error]);
 
+  useEffect(() => {
+    if (characterInfo) {
+      const id = getId(characterInfo.url);
+
+      if (id) {
+        navigate(`${Paths.character}/${id}`);
+      }
+    }
+  }, [characterInfo]);
+
   return (
     <div>
       {isLoading && <Preloader />}
-      <SearchInput setFiltredCharacters={setFilteredCharacters} />
+      <SearchInput setFilteredCharacters={setFilteredCharacters} />
       <Characters renderCharacters={renderCharacters} />
       <BasicPagination
         setPage={setPage}

@@ -7,7 +7,7 @@ import { Paths } from '../constants/paths';
 
 const ErrorPage = (): React.JSX.Element => {
   const navigate = useNavigate();
-  const handler = () => {
+  const handler = (): void => {
     navigate(Paths.main);
   };
 

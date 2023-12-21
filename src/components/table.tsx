@@ -8,26 +8,19 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 
-const createData = (
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number,
-) => ({ name, calories, fat, carbs, protein });
+import { getId } from '../helpers/getCharacteresId';
+import { CharacterType } from '../store/types';
 
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
-type PropsType = [];
-export const BasicTable = (): React.JSX.Element => (
+type PropsType = {
+  renderCharacters: CharacterType[];
+  handler: (url: string) => void;
+};
+export const BasicTable = ({
+  renderCharacters,
+  handler,
+}: PropsType): React.JSX.Element => (
   <TableContainer component={Paper}>
-    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+    <Table sx={{ minWidth: 650, backgroundColor: 'gray' }} aria-label="simple table">
       <TableHead>
         <TableRow>
           <TableCell>ID</TableCell>
@@ -38,18 +31,24 @@ export const BasicTable = (): React.JSX.Element => (
         </TableRow>
       </TableHead>
       <TableBody>
-        {rows.map(row => (
+        {renderCharacters.map(row => (
           <TableRow
-            key={row.name}
-            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            hover
+            onClick={() => handler(row.url)}
+            key={getId(row.url)}
+            sx={{
+              '&:last-child td, &:last-child th': { border: 0 },
+              cursor: 'pointer',
+              backgroundColor: 'darkgrey',
+            }}
           >
             <TableCell component="th" scope="row">
-              {row.name}
+              {getId(row.url)}
             </TableCell>
-            <TableCell align="left">{row.calories}</TableCell>
-            <TableCell align="left">{row.fat}</TableCell>
-            <TableCell align="left">{row.carbs}</TableCell>
-            <TableCell align="left">{row.protein}</TableCell>
+            <TableCell align="left">{row.name}</TableCell>
+            <TableCell align="left">{row.height}</TableCell>
+            <TableCell align="left">{row.mass}</TableCell>
+            <TableCell align="left">{row.gender}</TableCell>
           </TableRow>
         ))}
       </TableBody>

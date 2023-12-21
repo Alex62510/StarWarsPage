@@ -9,7 +9,7 @@ interface RoutesType {
 }
 
 const MainPage = lazy(() => import('../pages/mainPage'));
-const CharacterPage = lazy(() => import('../pages/characterPage'));
+const CharacterPage = lazy(() => import('../pages/characterPage/characterPage'));
 const ErrorPage = lazy(() => import('../pages/errorPage'));
 
 export const PagesRoutes: RoutesType[] = [
