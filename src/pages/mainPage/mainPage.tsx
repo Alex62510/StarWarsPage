@@ -2,14 +2,16 @@ import React, { useEffect, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
-import Characters from '../components/characters';
-import { BasicPagination } from '../components/pagination';
-import { SearchInput } from '../components/searchInput';
-import { Paths } from '../constants/paths';
-import { getId } from '../helpers/getCharacteresId';
-import Preloader from '../helpers/Preloader';
-import { useStore } from '../store/store';
-import { CharacterType } from '../store/types';
+import Characters from '../../components/characters/characters';
+import { BasicPagination } from '../../components/pagination';
+import { SearchInput } from '../../components/searchInput';
+import { Paths } from '../../constants/paths';
+import { getId } from '../../helpers/getCharacteresId';
+import Preloader from '../../helpers/Preloader';
+import { useStore } from '../../store/store';
+import { CharacterType } from '../../store/types';
+
+import s from './mainePage.module.css';
 
 const MainPage = React.memo(() => {
   const [page, setPage] = useState(1);
@@ -49,16 +51,18 @@ const MainPage = React.memo(() => {
   }, [characterInfo]);
 
   return (
-    <div>
+    <>
       {isLoading && <Preloader />}
-      <SearchInput setFilteredCharacters={setFilteredCharacters} />
-      <Characters renderCharacters={renderCharacters} />
-      <BasicPagination
-        setPage={setPage}
-        countItems={numberOfCharacters}
-        currentPage={page}
-      />
-    </div>
+      <div className={s.container}>
+        <SearchInput setFilteredCharacters={setFilteredCharacters} />
+        <Characters renderCharacters={renderCharacters} />
+        <BasicPagination
+          setPage={setPage}
+          countItems={numberOfCharacters}
+          currentPage={page}
+        />
+      </div>
+    </>
   );
 });
 

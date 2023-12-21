@@ -3,7 +3,7 @@ import React from 'react';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-import { Paths } from '../constants/paths';
+import { Paths } from '../../constants/paths';
 
 const ErrorPage = (): React.JSX.Element => {
   const navigate = useNavigate();
