@@ -26,7 +26,7 @@ export const BasicPagination: FC<PropsType> = ({
   };
 
   return (
-    <Stack spacing={2}>
+    <Stack spacing={1}>
       <Pagination
         count={countPage}
         page={currentPage}

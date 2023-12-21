@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Paths } from '../constants/paths';
 
-const ErrorPage = () => {
+const ErrorPage = (): React.JSX.Element => {
   const navigate = useNavigate();
   const handler = () => {
     navigate(Paths.main);

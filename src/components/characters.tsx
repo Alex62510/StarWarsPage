@@ -4,13 +4,19 @@ import { useNavigate } from 'react-router-dom';
 
 import { Paths } from '../constants/paths';
 import { getId } from '../helpers/getCharacteresId';
-import Preloader from '../helpers/Preloader';
 import { useStore } from '../store/store';
+import { CharacterType } from '../store/types';
 
-const Characters = (): React.JSX.Element => {
-  const { getCharacterInfo, characters, isLoading, characterInfo } = useStore();
+import { BasicTable } from './table';
+
+type PropsType = {
+  renderCharacters: CharacterType[];
+};
+const Characters = ({ renderCharacters }: PropsType): React.JSX.Element => {
+  const { characterInfo, getCharacterInfo } = useStore();
   const navigate = useNavigate();
-  const handler = (url: string) => {
+
+  const handler = (url: string): void => {
     getCharacterInfo(getId(url));
   };
 
@@ -18,13 +24,16 @@ const Characters = (): React.JSX.Element => {
     if (characterInfo) {
       const id = getId(characterInfo.url);
 
-      id && navigate(`${Paths.character}/${id}`);
+      if (id) {
+        navigate(`${Paths.character}/${id}`);
+      }
     }
   }, [characterInfo]);
 
   return (
     <div>
-      {characters.map(person => (
+      <BasicTable />
+      {renderCharacters.map(person => (
         <div onDoubleClick={() => handler(person.url)} key={getId(person.url)}>
           {person.name}
         </div>

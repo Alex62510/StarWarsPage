@@ -2,8 +2,6 @@ import { lazy, type ReactElement } from 'react';
 import React from 'react';
 
 import { Paths } from '../constants/paths';
-import CharacterPage from '../pages/characterPage';
-import ErrorPage from '../pages/errorPage';
 
 interface RoutesType {
   path: string;
@@ -11,6 +9,8 @@ interface RoutesType {
 }
 
 const MainPage = lazy(() => import('../pages/mainPage'));
+const CharacterPage = lazy(() => import('../pages/characterPage'));
+const ErrorPage = lazy(() => import('../pages/errorPage'));
 
 export const PagesRoutes: RoutesType[] = [
   {
