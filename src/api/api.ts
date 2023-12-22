@@ -13,4 +13,7 @@ export const charactersApi = {
   getCharacterInfo(id: number) {
     return instance.get<CharacterInfoType>(`/${id}`);
   },
+  getSearchCharacters(name: string) {
+    return instance.get<CharactersResponseType>(`/?search=${name}`);
+  },
 };

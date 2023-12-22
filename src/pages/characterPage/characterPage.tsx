@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Button } from '@mui/material';
 import { Fade } from 'react-awesome-reveal';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import { Paths } from '../../constants/paths';
 import { useStore } from '../../store/store';
 
 import s from './characterPage.module.css';
@@ -12,8 +11,16 @@ import s from './characterPage.module.css';
 const CharacterPage = (): React.JSX.Element => {
   const { characterInfo, getCharacterInfo } = useStore();
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  useEffect(() => {
+    if (id) {
+      getCharacterInfo(+id);
+    }
+  }, [id]);
+
   const handler = (): void => {
-    navigate(Paths.main);
+    navigate(-1);
     getCharacterInfo(null);
   };
   const renderInfoKey = characterInfo && Object.keys(characterInfo);
@@ -31,7 +38,7 @@ const CharacterPage = (): React.JSX.Element => {
         {renderInfoKey &&
           renderInfoKey?.map(key => (
             <div key={key}>
-              <Fade direction="up" duration={4000}>
+              <Fade direction="up" duration={3000}>
                 <div className={s.info}>{`${key}: ${characterInfo[key]}`}</div>
               </Fade>
             </div>

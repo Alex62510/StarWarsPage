@@ -1,7 +1,9 @@
 import React from 'react';
 
+import { useNavigate } from 'react-router-dom';
+
+import { Paths } from '../../constants/paths';
 import { getId } from '../../helpers/getCharacteresId';
-import { useStore } from '../../store/store';
 import { CharacterType } from '../../store/types';
 import { BasicTable } from '../table';
 
@@ -11,10 +13,13 @@ type PropsType = {
   renderCharacters: CharacterType[];
 };
 const Characters = ({ renderCharacters }: PropsType): React.JSX.Element => {
-  const { getCharacterInfo } = useStore();
-
+  const navigate = useNavigate();
   const handler = (url: string): void => {
-    getCharacterInfo(getId(url));
+    const id = getId(url);
+
+    if (id) {
+      navigate(`${Paths.character}/${id}`);
+    }
   };
 
   return (

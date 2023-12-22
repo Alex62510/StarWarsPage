@@ -1,6 +1,6 @@
 import { CharacterType } from '../store/types';
 
-export const search = (quary: string, items: CharacterType[]): CharacterType[] => {
+export const filtredItems = (quary: string, items: CharacterType[]): CharacterType[] => {
   if (!quary) {
     return items;
   }

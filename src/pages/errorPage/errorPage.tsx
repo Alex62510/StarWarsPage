@@ -14,7 +14,13 @@ const ErrorPage = (): React.JSX.Element => {
   return (
     <div>
       <div> Error</div>
-      <Button onClick={handler}>Back to main</Button>
+      <Button
+        variant="contained"
+        sx={{ color: 'black', backgroundColor: 'darkgrey' }}
+        onClick={handler}
+      >
+        Back to main
+      </Button>
     </div>
   );
 };

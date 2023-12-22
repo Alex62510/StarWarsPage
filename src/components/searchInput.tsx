@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 import SearchIcon from '@mui/icons-material/Search';
 import Divider from '@mui/material/Divider';
@@ -7,20 +7,22 @@ import IconButton from '@mui/material/IconButton';
 import InputBase from '@mui/material/InputBase';
 import Paper from '@mui/material/Paper';
 
-import { search } from '../helpers/filtred';
+import { useDebounce } from '../helpers/useDebounce';
 import { useStore } from '../store/store';
-import { CharacterType } from '../store/types';
 
-type PropsTyp = {
-  setFilteredCharacters: React.Dispatch<React.SetStateAction<CharacterType[] | null>>;
-};
-export const SearchInput = ({ setFilteredCharacters }: PropsTyp): React.JSX.Element => {
-  const { characters } = useStore();
+export const SearchInput = (): React.JSX.Element => {
+  const { getSearch } = useStore();
+  const [search, setSearch] = useState('');
+  const debouncedValue = useDebounce(search);
+
+  useEffect(() => {
+    getSearch(debouncedValue);
+  }, [debouncedValue, getSearch]);
 
   const handleChange = (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ): void => {
-    setFilteredCharacters(search(event.target.value, characters));
+    setSearch(event.target.value);
   };
 
   return (
