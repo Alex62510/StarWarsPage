@@ -1,19 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
+import { Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import { Paths } from '../../constants/paths';
 import { getId } from '../../helpers/getCharacteresId';
-import { CharacterType } from '../../store/types';
-import { BasicTable } from '../table';
+import { useStore } from '../../store/store';
+import { BasicTable } from '../table/table';
 
 import s from './characters.module.css';
 
-type PropsType = {
-  renderCharacters: CharacterType[];
-};
-const Characters = ({ renderCharacters }: PropsType): React.JSX.Element => {
+const Characters = (): React.JSX.Element => {
   const navigate = useNavigate();
+  const { characters, search, currentPage, getCharacters } = useStore();
   const handler = (url: string): void => {
     const id = getId(url);
 
@@ -22,10 +21,18 @@ const Characters = ({ renderCharacters }: PropsType): React.JSX.Element => {
     }
   };
 
+  useEffect(() => {
+    if (!search) {
+      getCharacters(currentPage);
+    }
+  }, [currentPage]);
+
+  const renderCharacters = search !== null ? search : characters;
+
   return (
-    <div className={s.characters}>
+    <Box className={s.characters}>
       <BasicTable renderCharacters={renderCharacters} handler={handler} />
-    </div>
+    </Box>
   );
 };
 

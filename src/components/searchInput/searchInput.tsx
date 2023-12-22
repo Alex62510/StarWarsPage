@@ -7,22 +7,26 @@ import IconButton from '@mui/material/IconButton';
 import InputBase from '@mui/material/InputBase';
 import Paper from '@mui/material/Paper';
 
-import { useDebounce } from '../helpers/useDebounce';
-import { useStore } from '../store/store';
+import { useDebounce } from '../../helpers/useDebounce';
+import { useStore } from '../../store/store';
 
 export const SearchInput = (): React.JSX.Element => {
-  const { getSearch } = useStore();
-  const [search, setSearch] = useState('');
-  const debouncedValue = useDebounce(search);
+  const { setSearch, currentPage, getSearch } = useStore();
+  const [value, setValue] = useState('');
+  const debouncedValue = useDebounce(value);
 
   useEffect(() => {
-    getSearch(debouncedValue);
-  }, [debouncedValue, getSearch]);
+    if (!debouncedValue) {
+      setSearch(null, 0);
+    } else {
+      getSearch(debouncedValue, currentPage);
+    }
+  }, [debouncedValue, currentPage]);
 
   const handleChange = (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ): void => {
-    setSearch(event.target.value);
+    setValue(event.target.value);
   };
 
   return (

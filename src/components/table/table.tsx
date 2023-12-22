@@ -8,8 +8,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 
-import { getId } from '../helpers/getCharacteresId';
-import { CharacterType } from '../store/types';
+import { getId } from '../../helpers/getCharacteresId';
+import { CharacterType } from '../../store/types';
 
 type PropsType = {
   renderCharacters: CharacterType[];

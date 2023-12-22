@@ -1,25 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
+import { Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import Characters from '../../components/characters/characters';
-import { BasicPagination } from '../../components/pagination';
-import { SearchInput } from '../../components/searchInput';
+import { BasicPagination } from '../../components/pagination/pagination';
+import { SearchInput } from '../../components/searchInput/searchInput';
 import { Paths } from '../../constants/paths';
 import Preloader from '../../helpers/Preloader';
 import { useStore } from '../../store/store';
 
 import s from './mainePage.module.css';
 
-const MainPage = React.memo(() => {
-  const [page, setPage] = useState(1);
-  const { search, error, getCharacters, characters, isLoading, numberOfCharacters } =
-    useStore();
+const MainPage = (): React.JSX.Element => {
+  const {
+    setCurrentPage,
+    currentPage,
+    countSearch,
+    error,
+    isLoading,
+    numberOfCharacters,
+  } = useStore();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    getCharacters(page);
-  }, [page]);
 
   useEffect(() => {
     if (error) {
@@ -27,22 +29,22 @@ const MainPage = React.memo(() => {
     }
   }, [error, navigate]);
 
-  const renderCharacters = search !== null ? search : characters;
+  const count = countSearch || numberOfCharacters;
 
   return (
-    <div>
+    <Box>
       {isLoading && <Preloader />}
-      <div className={s.container}>
+      <Box className={s.container}>
         <SearchInput />
-        {!isLoading && <Characters renderCharacters={renderCharacters} />}
+        <Characters />
         <BasicPagination
-          setPage={setPage}
-          countItems={numberOfCharacters}
-          currentPage={page}
+          setPage={setCurrentPage}
+          countItems={count}
+          currentPage={currentPage}
         />
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
-});
+};
 
 export default MainPage;

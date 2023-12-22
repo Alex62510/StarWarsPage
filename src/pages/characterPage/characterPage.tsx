@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { Fade } from 'react-awesome-reveal';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -26,25 +26,28 @@ const CharacterPage = (): React.JSX.Element => {
   const renderInfoKey = characterInfo && Object.keys(characterInfo);
 
   return (
-    <div>
-      <Button
-        variant="contained"
-        sx={{ color: 'black', backgroundColor: 'darkgrey' }}
-        onClick={handler}
-      >
-        Back to main
-      </Button>
-      <div>
+    <Box>
+      <Box className={s.button}>
+        <Button
+          variant="contained"
+          sx={{ color: 'black', backgroundColor: 'darkgrey' }}
+          onClick={handler}
+        >
+          Back to main
+        </Button>
+      </Box>
+
+      <Box>
         {renderInfoKey &&
           renderInfoKey?.map(key => (
-            <div key={key}>
+            <Box key={key}>
               <Fade direction="up" duration={3000}>
-                <div className={s.info}>{`${key}: ${characterInfo[key]}`}</div>
+                <Box className={s.info}>{`${key}: ${characterInfo[key]}`}</Box>
               </Fade>
-            </div>
+            </Box>
           ))}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

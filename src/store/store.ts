@@ -13,8 +13,11 @@ export type StoreType = {
   error: boolean;
   characterInfo: CharacterInfoType | null;
   search: CharacterType[] | null;
-  getSearch: (name: string) => void;
+  getSearch: (name: string, page?: number) => void;
   countSearch: number;
+  currentPage: number;
+  setCurrentPage: (currentPage: number) => void;
+  setSearch: (search: CharacterType[] | null, items: number) => void;
 };
 
 export const useStore = create<StoreType>(set => ({
@@ -25,6 +28,14 @@ export const useStore = create<StoreType>(set => ({
   error: false,
   search: null,
   countSearch: 0,
+
+  currentPage: 1,
+  setSearch: (value: CharacterType[] | null, items: number) => {
+    set({ search: value });
+    set({ countSearch: items });
+  },
+
+  setCurrentPage: (Page: number) => set({ currentPage: Page }),
   getCharacterInfo: async (id: number | null) => {
     set({ isLoading: true });
     if (id) {
@@ -58,7 +69,7 @@ export const useStore = create<StoreType>(set => ({
       set({ isLoading: false });
     }
   },
-  getSearch: async (name: string) => {
+  getSearch: async (name: string, page?: number) => {
     set({ isLoading: true });
     try {
       if (!name) {
@@ -66,7 +77,7 @@ export const useStore = create<StoreType>(set => ({
         set({ search: null });
         set({ error: false });
       }
-      const res = await charactersApi.getSearchCharacters(name);
+      const res = await charactersApi.getSearchCharacters(name, page);
 
       set({ countSearch: res.data.count });
       set({ search: res.data.results });
