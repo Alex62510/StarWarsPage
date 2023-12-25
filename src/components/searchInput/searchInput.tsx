@@ -12,7 +12,6 @@ import { useStore } from '../../store/store';
 
 export const SearchInput = (): React.JSX.Element => {
   const {
-    setCurrentPage,
     setSearchValue,
     setSearch,
     getSearch,
@@ -30,7 +29,6 @@ export const SearchInput = (): React.JSX.Element => {
     } else {
       getSearch(debouncedValue, searchCurrentPage);
       setSearchValue(value);
-      setCurrentPage(1);
     }
   }, [debouncedValue, searchCurrentPage]);
 
