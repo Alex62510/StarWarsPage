@@ -10,6 +10,8 @@ import { useStore } from '../../store/store';
 const ErrorPage = (): React.JSX.Element => {
   const navigate = useNavigate();
   const { isLoading } = useStore();
+
+  navigate(Paths.main);
   const handler = (): void => {
     navigate(Paths.main);
   };

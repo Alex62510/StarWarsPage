@@ -11,17 +11,28 @@ import { useDebounce } from '../../helpers/useDebounce';
 import { useStore } from '../../store/store';
 
 export const SearchInput = (): React.JSX.Element => {
-  const { setSearch, currentPage, getSearch } = useStore();
+  const {
+    setCurrentPage,
+    setSearchValue,
+    setSearch,
+    getSearch,
+    searchCurrentPage,
+    setSearchCurrentPage,
+  } = useStore();
   const [value, setValue] = useState('');
   const debouncedValue = useDebounce(value);
 
   useEffect(() => {
     if (!debouncedValue) {
       setSearch(null, 0);
+      setSearchValue('');
+      setSearchCurrentPage(1);
     } else {
-      getSearch(debouncedValue, currentPage);
+      getSearch(debouncedValue, searchCurrentPage);
+      setSearchValue(value);
+      setCurrentPage(1);
     }
-  }, [debouncedValue, currentPage]);
+  }, [debouncedValue, searchCurrentPage]);
 
   const handleChange = (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,

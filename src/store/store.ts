@@ -17,7 +17,11 @@ export type StoreType = {
   countSearch: number;
   currentPage: number;
   setCurrentPage: (currentPage: number) => void;
+  setSearchCurrentPage: (searchCurrentPage: number) => void;
   setSearch: (search: CharacterType[] | null, items: number) => void;
+  searchCurrentPage: number;
+  searchValue: string;
+  setSearchValue: (searchValue: string) => void;
 };
 
 export const useStore = create<StoreType>(set => ({
@@ -28,14 +32,16 @@ export const useStore = create<StoreType>(set => ({
   error: false,
   search: null,
   countSearch: 0,
-
+  searchCurrentPage: 1,
   currentPage: 1,
+  searchValue: '',
+  setSearchValue: (value: string) => set({ searchValue: value }),
   setSearch: (value: CharacterType[] | null, items: number) => {
     set({ search: value });
     set({ countSearch: items });
   },
-
-  setCurrentPage: (Page: number) => set({ currentPage: Page }),
+  setSearchCurrentPage: (searchPage: number) => set({ searchCurrentPage: searchPage }),
+  setCurrentPage: (page: number) => set({ currentPage: page }),
   getCharacterInfo: async (id: number | null) => {
     set({ isLoading: true });
     if (id) {

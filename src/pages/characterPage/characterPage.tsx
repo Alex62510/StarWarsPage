@@ -41,7 +41,7 @@ const CharacterPage = (): React.JSX.Element => {
         {renderInfoKey &&
           renderInfoKey?.map(key => (
             <Box key={key}>
-              <Fade direction="up" duration={3000}>
+              <Fade direction="up" duration={2000}>
                 <Box className={s.info}>{`${key}: ${characterInfo[key]}`}</Box>
               </Fade>
             </Box>

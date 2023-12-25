@@ -13,14 +13,7 @@ import { useStore } from '../../store/store';
 import s from './mainePage.module.css';
 
 const MainPage = (): React.JSX.Element => {
-  const {
-    setCurrentPage,
-    currentPage,
-    countSearch,
-    error,
-    isLoading,
-    numberOfCharacters,
-  } = useStore();
+  const { error, isLoading } = useStore();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,19 +22,13 @@ const MainPage = (): React.JSX.Element => {
     }
   }, [error, navigate]);
 
-  const count = countSearch || numberOfCharacters;
-
   return (
     <Box>
       {isLoading && <Preloader />}
       <Box className={s.container}>
         <SearchInput />
         <Characters />
-        <BasicPagination
-          setPage={setCurrentPage}
-          countItems={count}
-          currentPage={currentPage}
-        />
+        <BasicPagination />
       </Box>
     </Box>
   );
